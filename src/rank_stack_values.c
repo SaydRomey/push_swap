@@ -23,7 +23,7 @@ int	*rank_stack_values(t_stack *stack)
 	int	j;
 
 	array = stack_to_array(stack);
-	ranked = calloc(stack_size(stack), sizeof(int));
+	ranked = ft_calloc(stack_size(stack), sizeof(int));
 	i = 0;
 	while (i < stack_size(stack))
 	{
