@@ -1,0 +1,29 @@
+
+# Executables
+push_swap
+
+# Visualizer
+push_swap_visualizer/
+visualizer
+imgui.ini
+
+# Checker
+checker_OS
+
+# object files and archives in all directories
+**/obj/
+*.o
+*.a
+
+# tmp directories in all directories
+**/tmp/
+
+# PDFs
+*.pdf
+
+# macOS specific files
+*.dSYM
+.DS_Store
+
+# Visual Studio Code settings
+.vscode

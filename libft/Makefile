@@ -6,155 +6,184 @@
 #    By: cdumais <cdumais@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 21:18:26 by cdumais           #+#    #+#              #
-#    Updated: 2023/06/19 17:30:12 by cdumais          ###   ########.fr        #
+#    Updated: 2024/11/29 21:48:50 by cdumais          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # .SILENT:
+NAME 		:= libft.a
+AUTHOR		:= cdumais
 
-NAME		:=	libft.a
+INC_DIR		:= inc
+SRC_DIR		:= src
+OBJ_DIR		:= obj
 
-CC			:=	gcc
-CF			:=	-Wall -Werror -Wextra
-CI			:=	-I-I$(INC)
-LIBC		:=	ar -rcs
+COMPILE		:= gcc
+C_FLAGS		:= -Wall -Wextra -Werror
 
-REMOVE		:=	rm -f
-REMDIR		:=	rm -rf
+ARCHIVE		:= ar
+AR_FLAGS	:= rcs
+AR_INDEX	:= ranlib
 
-INC			:=	inc/
-SRC			:=	src/
-OBJ			:=	obj/
+REMOVE		:= rm -rf
 
 # **************************************************************************** #
-C_SRC	=																	   \
-ft_isalnum.c	ft_memchr.c		ft_strlen.c		ft_substr.c		ft_atoi.c	   \
-ft_isalpha.c	ft_memcmp.c		ft_strlcat.c	ft_strdup.c		ft_itoa.c	   \
-ft_isascii.c	ft_memcpy.c		ft_strlcpy.c	ft_strjoin.c				   \
-ft_isdigit.c	ft_memmove.c	ft_strchr.c		ft_strtrim.c	ft_putchar_fd.c\
-ft_isprint.c	ft_memset.c		ft_strrchr.c	ft_striteri.c	ft_putstr_fd.c \
-ft_tolower.c	ft_bzero.c		ft_strncmp.c	ft_strmapi.c	ft_putendl_fd.c\
-ft_toupper.c	ft_calloc.c		ft_strnstr.c	ft_split.c		ft_putnbr_fd.c 
+# --------------------------------- H FILES ---------------------------------- #
 # **************************************************************************** #
-SRCS		:= $(addprefix $(SRC), $(C_SRC))
-OBJS		:= $(addprefix $(OBJ), $(C_SRC:.c=.o))
+INC	:=			libft
 # **************************************************************************** #
-C_BONUS	=																	   \
-ft_lstnew.c	ft_lstadd_front.c	ft_lstsize.c	ft_lstmap.c		ft_lstlast.c   \
-			ft_lstadd_back.c	ft_lstclear.c	ft_lstiter.c				   \
-								ft_lstdelone.c								   
-# **************************************************************************** #				
-BSRCS		:= $(addprefix $(SRC), $(C_BONUS))
-BOBJS		:= $(addprefix $(OBJ), $(C_BONUS:.c=.o))
+# --------------------------------- C FILES ---------------------------------- #
+# *********** libc functions ******************* additonal functions ********* #
 # **************************************************************************** #
-GNL =																		   \
-get_next_line.c																   
+SRC :=			ft_isalpha							ft_substr	  			   \
+				ft_isdigit							ft_strjoin				   \
+				ft_isalnum							ft_strtrim				   \
+				ft_isascii							ft_split				   \
+				ft_isprint							ft_itoa					   \
+				ft_strlen							ft_strmapi				   \
+				ft_memset							ft_striteri				   \
+				ft_bzero							ft_putchar_fd			   \
+				ft_memcpy							ft_putstr_fd			   \
+				ft_memmove							ft_putendl_fd			   \
+				ft_strlcpy							ft_putnbr_fd			   \
+				ft_strlcat													   \
+				ft_toupper													   \
+				ft_tolower													   \
+				ft_strchr													   \
+				ft_strrchr													   \
+				ft_strncmp													   \
+				ft_memchr													   \
+				ft_memcmp													   \
+				ft_strnstr													   \
+				ft_atoi													   	   \
+				ft_calloc													   \
+				ft_strdup	
 # **************************************************************************** #
-GSRCS		:= $(addprefix $(SRC), $(GNL))
-GOBJS		:= $(addprefix $(OBJ), $(GNL:.c=.o))
+# ----------------------------------- BONUS ---------------------------------- #
+# ********* linked list functions ******************************************** #
 # **************************************************************************** #
-PRINTF =																	   \
-ft_printf.c		ft_intlen.c		ft_putnbr_base_fd.c								
+SRC +=	 		ft_lstnew													   \
+				ft_lstadd_front												   \
+				ft_lstsize													   \
+				ft_lstlast													   \
+				ft_lstadd_back												   \
+				ft_lstdelone												   \
+				ft_lstclear													   \
+				ft_lstiter													   \
+				ft_lstmap
 # **************************************************************************** #
-PFSRCS		:= $(addprefix $(SRC), $(PRINTF))
-PFOBJS		:= $(addprefix $(OBJ), $(PRINTF:.c=.o))
+# ------------------------------- OTHER PROJECTS ----------------------------- #
+# ************* get_next_line *********************** ft_printf ************** #
 # **************************************************************************** #
-PUSHWAP =																	   \
-ft_swap.c
+SRC +=			get_next_line						ft_printf				   \
+													ft_intlen				   \
+													ft_putnbr_base_fd
 # **************************************************************************** #
-PWSRCS		:= $(addprefix $(SRC), $(PUSHWAP))
-PWOBJS		:= $(addprefix $(OBJ), $(PUSHWAP:.c=.o))
+# -------------------------------- OTHER UTILS ------------------------------- #
+# ************* push_swap **************************************************** #
 # **************************************************************************** #
-# all: $(NAME)
+SRC +=			ft_swap
+# **************************************************************************** #
+# --------------------------------- ALL FILES -------------------------------- #
+# **************************************************************************** #
+INCS	:=	$(addprefix $(INC_DIR)/, $(addsuffix .h, $(INC)))
+SRCS	:=	$(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC)))
+OBJS	:=	$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+# **************************************************************************** #
+# -------------------------------- ALL * FILES ------------------------------- #
+# **************************************************************************** #
+# INCS	:=	$(wildcard $(INC_DIR)/*.h)
+# SRCS	:=	$(wildcard $(SRC_DIR)/*.c)
+# OBJS	:=	$(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%.o, $(SRCS))
+# **************************************************************************** #
+# ---------------------------------- RULES ----------------------------------- #
+# **************************************************************************** #
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	@echo "[$(BOLD)$(PURPLE)$(NAME)$(RESET)]\\t$(GREEN)created$(RESET)"
+	@$(ARCHIVE) $(AR_FLAGS) $(NAME) $(OBJS)
+	@$(AR_INDEX) $(NAME)
+
+# $(NAME): $(OBJS)
+# 	@echo "$(BOLD)$(PURPLE)$(NAME)$(RESET)$(GREEN) created$(RESET)"
 # 	@echo "$(GREEN)$$TITLE$(RESET)"
 # 	@echo "Executed by $(ITALIC)$(BOLD)$(PURPLE)$(USER)$(RESET) \
 # 		$(CYAN)$(TIME)$(RESET)\n"
+# 	@$(ARCHIVE) $(AR_FLAGS) $(NAME) $(OBJS)
+# 	@$(AR_INDEX) $(NAME)
 
-all: $(NAME)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCS) | $(OBJ_DIR)
+	@echo "$(CYAN)Compiling...$(ORANGE)\t$(notdir $<)$(RESET)"
+	@$(COMPILE) $(C_FLAGS) -I$(INC_DIR) -o $@ -c $<
+	@printf "$(UP)$(ERASE_LINE)"
 
-bonus: $(NAME)
-
-$(NAME): $(OBJS) $(BOBJS) $(GOBJS) $(PFOBJS) $(PWOBJS)
-	@$(LIBC) $(NAME) $(OBJS) $(BOBJS) $(GOBJS) $(PFOBJS) $(PWOBJS)
-	@echo "$(BOLD)$(PURPLE)$(NAME)$(GREEN) created$(RESET)"
-
-
-$(OBJ)%.o: $(SRC)%.c
-	@echo "$(BLUE)$(BOLD)Compiling $(RESET)$(CYAN)$(notdir $<)$(RESET)"
-	@mkdir -p $(OBJ)
-	@$(CC) $(CF) $(CI) -c $< -o $@
-	@printf $(UP)$(CUT)
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	@if [ -n "$(wildcard $(OBJ)*.o)" ]; then \
-		$(REMOVE) $(OBJS) $(BOBJS) $(GOBJS) $(PFOBJS) $(PWOBJS) ; \
-		$(REMDIR) $(OBJ); \
-		echo "$(GREEN)Object files removed$(RESET)"; \
+	@if [ -n "$(wildcard $(OBJ_DIR))" ]; then \
+		$(REMOVE) $(OBJ_DIR); \
+		echo "[$(BOLD)$(PURPLE)$(NAME)$(RESET)] \
+		$(GREEN)Object files removed$(RESET)"; \
 	else \
-		echo "$(YELLOW)No object files to remove$(RESET)"; \
+		echo "[$(BOLD)$(PURPLE)$(NAME)$(RESET)] \
+		$(YELLOW)No object files to remove$(RESET)"; \
 	fi
 
 fclean: clean
 	@if [ -n "$(wildcard $(NAME))" ]; then \
 		$(REMOVE) $(NAME); \
-		echo "$(BOLD)$(PURPLE)$(NAME)$(GREEN) removed$(RESET)"; \
+		echo "[$(BOLD)$(PURPLE)$(NAME)$(RESET)] \
+		$(GREEN)Library removed$(RESET)"; \
 	else \
-		echo "$(YELLOW)No library to remove$(RESET)"; \
+		echo "[$(BOLD)$(PURPLE)$(NAME)$(RESET)] \
+		$(YELLOW)No library to remove$(RESET)"; \
 	fi
-
-vclean:	fclean
-	$(eval NOMISC :=$(filter-out Makefile inc src, $(wildcard *)))
-	@if [ -n "$(NOMISC)" ]; then \
-		$(REMOVE) $(NOMISC); \
-		echo "$(GREEN)Cleaned up: $(RESET) $(NOMISC)"; \
-	else \
-		echo "$(YELLOW)All cleaned up !$(RESET)"; \
-	fi;
 
 re: fclean all
 
-norm:
-	norminette -R CheckForbiddenSourceHeader src/*.c
-	norminette -R CheckDefine inc/*.h
-
-.PHONY:	all clean fclean re \
-		bonus norm vclean
+.PHONY: all clean fclean re
 # **************************************************************************** #
-# Colors
-BLACK		=\033[30m
-RED			=\033[31m
-GREEN		=\033[32m
-YELLOW		=\033[33m
-BLUE		=\033[34m
-PURPLE		=\033[35m
-CYAN		=\033[36m
-WHITE		=\033[37m
+# -------------------------------- NORMINETTE -------------------------------- #
+# **************************************************************************** #
+norm:
+	@echo "$(BOLD)$(YELLOW)Norminetting $(PURPLE)$(NAME)$(RESET)"
+	@norminette -o $(INCS)
+	@norminette -o $(SRCS)
 
-# # Text
-ERASE		=\033[2K\r
-RESET		=\033[0m
-BOLD		=\033[1m
-FAINT		=\033[2m
-ITALIC		=\033[3m
-UNDERLINE	=\033[4m
-# BLINK		=\033[5m #no effect on iterm?
-INVERT		=\033[7m
-STRIKE		=\033[9m
+nm:
+	@echo "$(BOLD)$(YELLOW)Functions in $(PURPLE)$(UNDERLINE)$(NAME)$(RESET):"
+	@nm $(NAME) | grep U | grep -v 'ft_' \
+				| sed 's/U//g' | sed 's/__//g' | sed 's/ //g' \
+				| sort | uniq
 
-# # Background
-BG_BLACK	=\033[40m
-BG_RED		=\033[41m
-BG_GREEN	=\033[42m
-BG_YELLOW	=\033[43m
-BG_BLUE		=\033[44m
-BG_PURPLE	=\033[45m
-BG_CYAN		=\033[46m
-BG_WHITE	=\033[47m
+.PHONY: norm nm
+# **************************************************************************** #
+# ----------------------------------- ANSI ----------------------------------- #
+# **************************************************************************** #
+ESC			:= \033
 
-# # ? (with printf)
-UP			="\033[A"
-CUT			="\033[K"
+# Text
+RESET		:= $(ESC)[0m
+BOLD		:= $(ESC)[1m
+ITALIC		:= $(ESC)[3m
+UNDERLINE	:= $(ESC)[4m
 
+RED			:= $(ESC)[91m
+GREEN		:= $(ESC)[32m
+YELLOW		:= $(ESC)[93m
+ORANGE		:= $(ESC)[38;5;208m
+BLUE		:= $(ESC)[94m
+PURPLE		:= $(ESC)[95m
+CYAN		:= $(ESC)[96m
+GRAYTALIC	:= $(ESC)[3;90m
+
+# Cursor movement
+UP			:= $(ESC)[A
+
+# Erasing
+ERASE_LINE	:= $(ESC)[2K
 # **************************************************************************** #
 # ------------------------------- DECORATIONS -------------------------------- #
 # **************************************************************************** #
@@ -164,12 +193,18 @@ define TITLE
 ██      ██ ██   ██ ██         ██    
 ██      ██ ██████  █████      ██    
 ██      ██ ██   ██ ██         ██    
-███████ ██ ██████  ██         ██    
-                                    
+███████ ██ ██████  ██         ██   
+
 endef
 export TITLE
 
-USER	=$(shell whoami)
-TIME	=$(shell date "+%H:%M:%S")
+USER		:=$(shell whoami)
+TIME		:=$(shell date "+%H:%M:%S")
 
-# **************************************************************************** #
+title:
+	@echo "[$(BOLD)$(PURPLE)$(NAME)$(RESET)]\\t$(GREEN)created$(RESET)"
+	@echo "$(GREEN)$$TITLE$(RESET)"
+	@echo "Executed by $(ITALIC)$(BOLD)$(PURPLE)$(USER)$(RESET) \
+		$(CYAN)$(TIME)$(RESET)\n"
+
+.PHONY: title

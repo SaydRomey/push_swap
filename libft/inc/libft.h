@@ -6,7 +6,7 @@
 /*   By: cdumais <cdumais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:49:30 by cdumais           #+#    #+#             */
-/*   Updated: 2023/06/16 13:48:56 by cdumais          ###   ########.fr       */
+/*   Updated: 2024/11/29 21:45:32 by cdumais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <stdarg.h>
-
-// typedef signed char			t_i8;
-// typedef unsigned char		t_u8;
-
-// typedef signed short		t_i16;
-// typedef unsigned short		t_u16;
-
-// typedef signed int			t_i32;
-// typedef unsigned int		t_u32;
-
-// typedef signed long long	t_i64;
-// typedef unsigned long long	t_u64;
 
 # define BINARY "01"
 # define OCTAL "01234567"
